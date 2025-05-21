@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario de Pedido - Cocina Nelsy</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff5f0;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .form-card {
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      color: #e40a52;
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #444;
+      font-size: 14px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+      box-sizing: border-box;
+      background-color: #fffdfb;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .cuenta-box {
+      background: #fff3f3;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      border: 1px solid #f4c7c7;
+      text-align: center;
+    }
+
+    .cuenta-numero {
+      font-size: 18px;
+      font-weight: bold;
+      color: #e40a52;
+      letter-spacing: 1px;
+    }
+
+    .preview img {
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background: #25d366;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #1ebe5d;
+    }
+
+    input[type="file"] {
+      border: none;
+      background: transparent;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-card">
+    <div class="logo">
+      <img src="https://st2.depositphotos.com/41266808/46769/v/450/depositphotos_467690328-stock-illustration-plate-logo-stock-illustration-design.jpg" alt="Cocina Nelsy" />
+    </div>
+    <h2>Formulario de Pedido</h2>
+    <label>Nombre</label>
+    <input type="text" id="nombre" placeholder="name" />
+
+    <label>Apellido</label>
+    <input type="text" id="apellido" placeholder="last name" />
+
+    <label>Dirección</label>
+    <textarea id="direccion" placeholder="Ej: Calle 10 #23 entre 21 y 25" rows="2"></textarea>
+
+    <label>Referencia</label>
+    <textarea id="referencia" placeholder="Ej: Frente al OXXO" rows="2"></textarea>
+
+    <div class="cuenta-box">
+      <strong>Cuenta para depósito:</strong><br />
+      <span class="cuenta-numero">4027 6658 4368 2825</span>
+    </div>
+
+    <label>📷 Comprobante de depósito</label>
+    <input type="file" id="comprobante" accept="image/*" onchange="mostrarVistaPrevia(event)" />
+    <div class="preview" id="vista-previa"></div>
+
+    <button onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+  </div>
+
+  <script>
+    function mostrarVistaPrevia(event) {
+      const archivo = event.target.files[0];
+      const vista = document.getElementById('vista-previa');
+      vista.innerHTML = '';
+      if (archivo) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(archivo);
+        vista.appendChild(img);
+      }
+    }
+
+    function enviarWhatsApp() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const direccion = document.getElementById('direccion').value.trim();
+      const referencia = document.getElementById('referencia').value.trim();
+
+      if (!nombre || !apellido || !direccion || !referencia) {
+        alert('Por favor completa todos los campos antes de enviar.');
+        return;
+      }
+
+      const mensaje = `*Pedido para Cocina Nelsy*\n\n👤 *Nombre:* ${nombre} ${apellido}\n📍 *Dirección:* ${direccion}\n📌 *Referencia:* ${referencia}\n💳 *Cuenta para depósito:* 4027 6658 4368 2825`;
+
+      const url = `https://wa.me/529992236981?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
+
